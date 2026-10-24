@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AUTODESTRUCTION</title>
+<style>
+  *{box-sizing:border-box}
+  body{
+    margin:0; min-height:100vh; display:grid; place-items:center;
+    background:#050505; color:#f5f5f5; font-family:monospace;
+  }
+  .screen{
+    width:min(92vw,700px); padding:34px 24px; text-align:center;
+    border:2px solid #777; background:#0b0b0b;
+    box-shadow:0 0 35px #000;
+  }
+  h1{font-size:clamp(28px,8vw,62px); margin:0 0 8px; letter-spacing:4px}
+  .warning{font-size:14px; letter-spacing:2px; opacity:.8}
+  #count{font-size:clamp(90px,25vw,180px); font-weight:bold; margin:25px 0}
+  #status{min-height:28px; font-size:16px}
+  .bar{height:12px;border:1px solid #777;margin:22px 0;overflow:hidden}
+  #fill{height:100%;width:100%;background:#eee;transition:width 1s linear}
+  button{
+    padding:12px 18px;background:#111;color:#fff;border:1px solid #aaa;
+    font-family:monospace;cursor:pointer
+  }
+  .boom{font-size:clamp(34px,10vw,80px);font-weight:bold}
+</style>
+</head>
+<body>
+<main class="screen">
+  <div class="warning">⚠ SYSTÈME DE SÉCURITÉ — ACCÈS NFC</div>
+  <h1 id="title">AUTODESTRUCTION</h1>
+  <div id="status">Séquence d'autodestruction activée.</div>
+  <div id="count">10</div>
+  <div class="bar"><div id="fill"></div></div>
+  <button id="again">RECOMMENCER</button>
+</main>
+
+<script>
+const count=document.getElementById("count");
+const status=document.getElementById("status");
+const fill=document.getElementById("fill");
+const title=document.getElementById("title");
+const again=document.getElementById("again");
+
+function start(){
+  let n=10;
+  title.textContent="AUTODESTRUCTION";
+  status.textContent="Séquence d'autodestruction activée.";
+  count.className="";
+  count.textContent=n;
+  fill.style.width="100%";
+
+  const timer=setInterval(()=>{
+    n--;
+    count.textContent=n;
+    fill.style.width=(n*10)+"%";
+    if(n<=0){
+      clearInterval(timer);
+      title.textContent="💥 BOOM 💥";
+      count.className="boom";
+      count.textContent="0";
+      status.textContent="Autodestruction… annulée. Tu t'es fait avoir. 💀";
+      fill.style.width="0%";
+    }
+  },1000);
+}
+again.onclick=start;
+start();
+</script>
+</body>
+</html>
